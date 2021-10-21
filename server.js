@@ -49,7 +49,6 @@ const { DataRowMessage } = require("pg-protocol/dist/messages");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 app.use("/login", loginRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
