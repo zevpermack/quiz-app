@@ -19,13 +19,30 @@
 <body>
   <%- include('partials/_header') %>
   <main>
-  <h1>Have Fun
-    <% if(name) { %>
-   <%= name %>
-    <% } %>
-  </h1>
-  ✍🏽
-</main>
+    <div class = "main-grid">
+      <div id = "title-card" >
+        <h1> Expand Your Mind 🤯 </h1>
+        <hr class = "title-line">
+        <h2> Create quizzes or take user made quizzes from around the globe! </h2>
+      </div>
+      <div id = recent-quizzes>
+        <div class = recent-quiz>
+          <h3>Title of quiz</h3>
+          <h4>Created By</h4>
+        </div>
+        <div class = recent-quiz>
+          <h3>Title of quiz</h3>
+          <h4>Created By</h4>
+        </div>
+        <div class = recent-quiz>
+          <h3>Title of quiz</h3>
+          <h4>Created By</h4>
+        </div>
+      </div>
+      <div>Some text2</div>
+    </div>
+
+  </main>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
