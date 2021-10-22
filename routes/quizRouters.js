@@ -10,6 +10,7 @@ const quizRouters = (db) => {
   router.get('/',(req,res) =>{
     getAllQuizzes(db)
     .then((quizzes) =>{
+      console.log(quizzes)
       return res.json(quizzes)
     })
   })
