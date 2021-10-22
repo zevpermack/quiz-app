@@ -37,8 +37,23 @@ const getQuizById = function(db,id){
 //function to create new quiz
 const createNewQuiz = function(db,quiz){
 
-  const queryParams =[id];
-  const queryString = `SELECT * FROM quizzes WHERE id = $1 `;
+  const queryParams =[quiz.user_id,quiz.title,quiz.visibility];
+  const queryString = `INSERT INTO quizzes (user_id,title,visibility) VALUES ($1,$2,$3) returning *`;
+   return db.query(queryString,queryParams)
+   .then((res) =>{
+        return res.rows[0];
+   })
+   .catch((err) =>{
+     console.log(err.message);
+   })
+
+}
+
+//function to create new questions of a quiz
+const createNewQuestions = function(db,question){
+
+  const queryParams =[question.quiz_id,question.question_content,question.choice1,question.choice2,question.choice3,question.choice4,answer];
+  const queryString = `INSERT INTO questions (quiz_id,question_content,choice1,choice2,choice3,choice4,answer) VALUES ($1,$2,$3,$4,$5,$6,$7) returning *`;
    return db.query(queryString,queryParams)
    .then((res) =>{
         return res.rows[0];
@@ -51,4 +66,7 @@ const createNewQuiz = function(db,quiz){
 
 
 
-module.exports = { getAllQuizzes, getQuizById } ;
+
+
+
+module.exports = { getAllQuizzes, getQuizById, createNewQuiz, createNewQuestions} ;
