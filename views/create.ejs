@@ -24,14 +24,40 @@
       <form class="form" action="/urls" method="POST">
         <div class="form-group mb-2 create-title">
           <label for="quizTitle">Quiz Title:</label>
-          <input class="form-control" type="text" name="quizTitle" placeholder="eg. Capital Cities" style= "width: 300px;">
+          <input class="" type="text" name="quizTitle" placeholder="eg. Capital Cities" style= "width: 300px;">
         </div>
       <div class="form-group mb-2 private-option">
         <label class="form-check-label" for="private-check">
-          Check box to make quiz private:
+          Check this box to make quiz private:
         </label>
         <input class="form-check-input ml-2" type="checkbox" value="" id="private-check" checked>
       </div>
+      <div class="form-group mb-2 question1">
+        <label for="question1">Question 1:</label>
+        <input class="form-control mb-2" type="text" name="question1" placeholder="eg. What is the capital of?" style= "width: 1000px;">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadio1">
+          <input class="form-control" for="flexRadio1" type="text" name="question1" placeholder="Choice 1" style= "width: 500px;">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadio2">
+          <input class="form-control" for="flexRadio2" type="text" name="question1" placeholder="Choice 2" style= "width: 500px;">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadio3">
+          <input class="form-control" for="flexRadio3" type="text" name="question1" placeholder="Choice 3" style= "width: 500px;">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadio4">
+          <input class="form-control" for="flexRadio4" type="text" name="question1" placeholder="Choice 4" style= "width: 500px;">
+        </div>
+      </div>
+      <div class = "btn" id = "add-question-btn" >
+        <span class = "mr-2">➕</span>
+        <span>add question</span>
+      </div>
+
+
 
       </form>
     </div>
