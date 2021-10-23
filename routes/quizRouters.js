@@ -6,7 +6,6 @@ const { getAllQuizzes,getQuizById,createNewQuestions,createNewQuiz } = require('
 const quizRouters = (db) => {
 
 
-
   router.get('/',(req,res) =>{
     getAllQuizzes(db)
     .then((quizzes) =>{
@@ -14,7 +13,6 @@ const quizRouters = (db) => {
       return res.json(quizzes)
     })
   })
-
 
 
   router.get('/new',(req,res) =>{
@@ -40,6 +38,10 @@ const quizRouters = (db) => {
 
    })
    })
+
+router.post('/:id',(req,res) => {
+
+})
 
 return router;
 
