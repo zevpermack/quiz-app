@@ -30,16 +30,16 @@
       <h2 class = "card-head">Hot Quizzes</h2>
       <div id = "recent-cards">
         <div class = "recent-quiz">
-          <h3 id = "recent-1">Title of quiz1</h3>
-          <h4 class = "created-by" id = "created-by-1">Created By</h4>
+          <a id = "recent-1"><%= data[0].title %></a>
+          <h4 class = "created-by" id = "created-by-1">Created By <%= data[0].name %></h4>
         </div>
         <div class = "recent-quiz">
-          <h3 id = "recent-2">Title of quiz2</h3>
-          <h4 class = "created-by" id = "created-by-2">Created By</h4>
+          <a id = "recent-2"><%= data[1].title %></a>
+          <h4 class = "created-by" id = "created-by-2">Created By <%= data[1].name %></h4>
         </div>
         <div class = "recent-quiz">
-          <h3 id = "recent-3">Title of quiz3</h3>
-          <h4 class = "created-by" id = "created-by-3">Created By</h4>
+          <a id = "recent-3"><%= data[2].title %></a>
+          <h4 class = "created-by" id = "created-by-3">Created By <%= data[2].name %></h4>
         </div>
       </div>
     </div>
