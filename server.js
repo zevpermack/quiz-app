@@ -44,13 +44,15 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
-const quizRoutes = require("./routes/quizzes");
+const resultsRoutes = require("./routes/results");
+
 const { DataRowMessage } = require("pg-protocol/dist/messages");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/login", loginRoutes(db));
-app.use("/quizzes", quizRoutes(db));
+//app.use("/quizzes", quizRoutes(db));
+app.use("/results", resultsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
