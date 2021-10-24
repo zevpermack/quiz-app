@@ -25,9 +25,16 @@ const quizRouters = (db) => {
 
 
   router.get('/new', (req, res) => {
-    res.render("test_new_quiz")
+    const userId = req.session.user_id;
 
-
+    if (userId) {
+      return db.query("SELECT * FROM users  WHERE users.id = $1 ", [userId])
+        .then((loginData) => {
+          res.render("create", { name: loginData.rows[0].name });
+        }).catch((err) => {
+          console.log(err.message);
+        })
+    }
   })
 
   router.get('/:id', (req, res) => {
@@ -38,14 +45,7 @@ const quizRouters = (db) => {
   })
 
   router.post('/', (req, res) => {
-    // console.log(req.body)
-    // res.send("ok");
-    const obj = {};
-    createNewQuiz(db, obj)
-      .then((data) => {
-        //loop through user questions and run createnewquestion for every question
-
-      })
+    console.log(req.body);
   })
 
   router.post('/:id', (req, res) => {
