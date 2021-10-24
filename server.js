@@ -80,10 +80,11 @@ app.use("/quizzes", quizRoutes(db));
 // });
 
 app.get("/", (req, res) => {
-  return db.query("SELECT quizzes.title,quizzes.date_created,question_content,choice1,choice2,choice3,choice4 FROM quizzes JOIN questions ON quizzes.id = quiz_id  ORDER BY date_created DESC LIMIT 3")
+  return db.query("SELECT quizzes.title,users.name FROM quizzes JOIN  users ON users.id = user_id LIMIT 3")
   .then((data) => {
 
-    return res.json(data.rows);
+    // return res.json(data.rows);
+    res.render("index.ejs",{ data:data.rows });
   })
   .catch((err) => {
     console.log(err.message);
