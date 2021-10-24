@@ -20,20 +20,17 @@
   <%- include('partials/_header') %>
   <main>
     <div class = "main-grid">
-      <div id = "title-card" >
-        <h1> All Quizzes </h1>
-        <hr class = "title-line">
-        <h2> List all public quizzes </h2>
-      </div>
-
-    <div id = "popular-quizzes">
-      <div id ="recent-cards">
+      <div class="list-group">
         <% data.forEach(function(quiz) { %>
-          <div class = "recent-quiz">
-            <a id ="recent-1"><%= quiz.title %></a>
-            <h4 class = "created-by" id = "created-by-1">Created By <%= quiz.name %></h4>
-              <% }); %>
-        </div>
+          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1"><%= quiz.title %></h5>
+              <small>Created at: <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(quiz.date_created) %></small>
+            </div>
+            <p class="mb-1">Created By: <%= quiz.name %> </p>
+            <% }); %>
+          </a>
+
       </div>
     </div>
 
