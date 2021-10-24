@@ -47,6 +47,8 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 const quizRoutes = require("./routes/quizRouters");
+const resultsRoutes = require("./routes/results");
+
 const { DataRowMessage } = require("pg-protocol/dist/messages");
 // Mount all resource routes
 
@@ -55,6 +57,9 @@ app.use("/login", loginRoutes(db));
 app.use("/quizzes", quizRoutes(db));
 
 
+//app.use("/quizzes", quizRoutes(db));
+app.use("/results", resultsRoutes(db));
+// Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
