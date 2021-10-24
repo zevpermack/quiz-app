@@ -60,36 +60,41 @@ app.use("/quizzes", quizRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-// app.get("/", (req, res) => {
-//   const userId = req.session.user_id;
-//   console.log('REQ.SESSION: ', req.session)
-//   console.log('USER ID: ', userId);
-//   if(userId) {
-//     return db.query("SELECT * FROM users  WHERE users.id = $1 ", [userId])
-//     .then((data) => {
-//        console.log('data rows: ', data.rows[0].name);
-//        const templateVars = {name: data.rows[0].name};
-//       res.render("index", templateVars);
-
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//     })
-//   }
-//    res.render("index", {name: undefined} );
-// });
-
 app.get("/", (req, res) => {
-  return db.query("SELECT quizzes.title,users.name FROM quizzes JOIN  users ON users.id = user_id LIMIT 3")
-  .then((data) => {
+  const userId = req.session.user_id;
+  // console.log('REQ.SESSION: ', req.session)
+  // console.log('USER ID: ', userId);
+  if(userId) {
+    return db.query("SELECT * FROM users  WHERE users.id = $1 ", [userId])
+    .then((loginData) => {
+      /// /  console.log('data rows: ', data.rows[0].name);
+       // const templateVars = {name: data.rows[0].name};
+       // res.render("index", templateVars);
 
-    // return res.json(data.rows);
-    res.render("index.ejs",{ data:data.rows });
-  })
-  .catch((err) => {
-    console.log(err.message);
-  })
-})
+        return db.query("SELECT quizzes.title,users.name FROM quizzes JOIN  users ON users.id = user_id LIMIT 3")
+         .then((quizData) => {
+           console.log(quizData.rows);
+           res.render("index",{ data: quizData.rows, name: loginData.rows[0].name });
+         })
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  }
+   res.render("index", {name: undefined} );
+});
+
+// app.get("/", (req, res) => {
+//   return db.query("SELECT quizzes.title,users.name FROM quizzes JOIN  users ON users.id = user_id LIMIT 3")
+//   .then((data) => {
+
+//     // return res.json(data.rows);
+//     res.render("index.ejs",{ data:data.rows });
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   })
+// })
 
 
 
