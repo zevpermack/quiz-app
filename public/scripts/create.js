@@ -11,6 +11,10 @@ $(() => {
   $( "#add-question-btn" ).on( "click", function() {
     let lastId = $(".quiz-questions").children().last().attr("id");
     const lastIdNum = parseInt(lastId);
+    if(!allowedToCreate(lastIdNum)) {
+      alert("Please fill out the previous question");
+      return;
+    }
     let questionNumber = lastIdNum + 1;
    // $(".quiz-questions").append(
      $(".quiz-questions-container").append(
@@ -44,6 +48,12 @@ $(() => {
 
 $("form").on('submit', function (e) {
   e.preventDefault();
+
+  if(!allowedToCreate(getLastQuestionId())) {
+    alert("Please fill out the previous question");
+    return;
+  }
+
   const title = document.getElementById("quizTitle");
   if(!title.value.trim()) {
     alert("Please enter quiz title!");
@@ -54,6 +64,37 @@ $("form").on('submit', function (e) {
 
   getQuestions();
 });
+
+// Check if previous question is filled out;
+function allowedToCreate(index) {
+    const question_content = document.getElementById(`questionTitle-${index}`).value;
+    const choice1 = document.getElementById(`questionChoice1-${index}`).value;
+    const choice2 = document.getElementById(`questionChoice2-${index}`).value;
+    const choice3 = document.getElementById(`questionChoice3-${index}`).value;
+    const choice4 = document.getElementById(`questionChoice4-${index}`).value;
+    const answerChoice = getRadioButtonValue(`radio${index}`);
+
+    if(!question_content.trim()) {
+      return false;
+    } else if(!choice1.trim()) {
+      return false;
+    } else if(!choice2.trim()) {
+      return false;
+    } else if(!choice3.trim()) {
+      return false;
+    } else if(!choice4.trim()) {
+      return false;
+    } else if(!answerChoice) {
+      return false;
+    }
+
+    return true;
+}
+
+function getLastQuestionId() {
+  let lastId = $(".quiz-questions").children().last().attr("id");
+  return parseInt(lastId);
+}
 
 function getQuestions() {
   const elements = document.getElementsByClassName("quiz-questions");
