@@ -50,7 +50,7 @@ $("form").on('submit', function (e) {
     return;
   }
 
-  const visibility = getVisibility();
+  //const visibility = getVisibility();
 
   getQuestions();
 });
@@ -62,8 +62,16 @@ function getQuestions() {
   const questions = [];
 
   // HTMLCollection to get each element along with index
+
+  const quizTitle = document.getElementById(`quizTitle`).value;
+  //questions.push(quizTitle);
+
+  //const isPrivate = (document.getElementById(`private-check`).checked)
+  const isPrivate = getVisibility();
+  console.log("visibility",isPrivate);
   for(let index = 0; index < elements.length; index++) {
-    const questionTitle = document.getElementById(`questionTitle-${index}`).value;
+
+    const question_content = document.getElementById(`questionTitle-${index}`).value;
     const choice1 = document.getElementById(`questionChoice1-${index}`).value;
     const choice2 = document.getElementById(`questionChoice2-${index}`).value;
     const choice3 = document.getElementById(`questionChoice3-${index}`).value;
@@ -71,12 +79,13 @@ function getQuestions() {
 
     // Defines the selected radio button
     const answerChoice = getRadioButtonValue(`radio${index}`);
-     console.log("++++",answerChoice)
+     //console.log("++++",answerChoice)
     // Defines the answer
     const answer = document.getElementById(`questionChoice${answerChoice}-${index}`).value;
 
     questions.push({
-      questionTitle,
+
+      question_content,
       choice1,
       choice2,
       choice3,
@@ -84,11 +93,12 @@ function getQuestions() {
       answer
     })
   }
+
 console.log(questions);
   $.ajax({
     type: "POST",
     url: "/quizzes",
-    data: { questions },
+    data: {quizTitle,isPrivate, questions },
     success: () => {
       window.location.href = "/";
     },

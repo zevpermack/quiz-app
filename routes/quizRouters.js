@@ -45,8 +45,38 @@ const quizRouters = (db) => {
   })
 
   router.post('/', (req, res) => {
-    console.log(req.body);
+    const { quizTitle, isPrivate, questions } = req.body;
+    const userId = req.session.user_id;
+    if (userId) {
+      return db.query("SELECT * FROM users WHERE users.id = $1 ", [userId])
+        .then(async (loginData) => {
+          //res.render("create", { name: loginData.rows[0].name });
+          createNewQuiz(db, userId, quizTitle, isPrivate).then((quiz) => {
+            const { id } = quiz;
+
+            questions.forEach((question) => {
+              createNewQuestions(db, { quiz_id: id, ...question })
+            });
+          });
+        })
+
+
+
+
+      }
+
+
+  //   createNewQuiz(db,)
+
+  //   .then((quizID) => {
+  //     return createNewQuestions()
+
+  //   })
+  //   .then(redirect)
   })
+
+
+
 
   router.post('/:id', (req, res) => {
 
