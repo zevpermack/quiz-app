@@ -67,7 +67,7 @@ function getQuestions() {
   //questions.push(quizTitle);
 
   //const isPrivate = (document.getElementById(`private-check`).checked)
-  const isPrivate = getVisibility();
+  const isPrivate = getVisibility() === true ? "private" : "public";
   console.log("visibility",isPrivate);
   for(let index = 0; index < elements.length; index++) {
 
@@ -100,7 +100,7 @@ console.log(questions);
     url: "/quizzes",
     data: {quizTitle,isPrivate, questions },
     success: () => {
-      window.location.href = "/";
+      window.location.href = "/quizzes";
     },
     catch: (e) => {
       alert(e);

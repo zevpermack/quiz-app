@@ -48,7 +48,7 @@ const quizRouters = (db) => {
     const { quizTitle, isPrivate, questions } = req.body;
     const userId = req.session.user_id;
     if (userId) {
-      return db.query("SELECT * FROM users WHERE users.id = $1 ", [userId])
+      db.query("SELECT * FROM users WHERE users.id = $1 ", [userId])
         .then(async (loginData) => {
           //res.render("create", { name: loginData.rows[0].name });
           createNewQuiz(db, userId, quizTitle, isPrivate).then((quiz) => {
@@ -58,13 +58,10 @@ const quizRouters = (db) => {
               createNewQuestions(db, { quiz_id: id, ...question })
             });
           });
-        })
-
-
-
-
+        });
+        // Return response to ajax with 201 statuscode;
+        return res.send({ true: true });
       }
-
 
   //   createNewQuiz(db,)
 
