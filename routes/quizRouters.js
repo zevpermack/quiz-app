@@ -25,9 +25,16 @@ const quizRouters = (db) => {
 
 
   router.get('/new', (req, res) => {
-    res.render("test_new_quiz")
+    const userId = req.session.user_id;
 
-
+    if (userId) {
+      return db.query("SELECT * FROM users  WHERE users.id = $1 ", [userId])
+        .then((loginData) => {
+          res.render("create", { name: loginData.rows[0].name });
+        }).catch((err) => {
+          console.log(err.message);
+        })
+    }
   })
 
   router.get('/:id', (req, res) => {
@@ -38,15 +45,35 @@ const quizRouters = (db) => {
   })
 
   router.post('/', (req, res) => {
-    // console.log(req.body)
-    // res.send("ok");
-    const obj = {};
-    createNewQuiz(db, obj)
-      .then((data) => {
-        //loop through user questions and run createnewquestion for every question
+    const { quizTitle, isPrivate, questions } = req.body;
+    const userId = req.session.user_id;
+    if (userId) {
+      db.query("SELECT * FROM users WHERE users.id = $1 ", [userId])
+        .then(async (loginData) => {
+          //res.render("create", { name: loginData.rows[0].name });
+          createNewQuiz(db, userId, quizTitle, isPrivate).then((quiz) => {
+            const { id } = quiz;
 
-      })
+            questions.forEach((question) => {
+              createNewQuestions(db, { quiz_id: id, ...question })
+            });
+          });
+        });
+        // Return response to ajax with 201 statuscode;
+        return res.send({ true: true });
+      }
+
+  //   createNewQuiz(db,)
+
+  //   .then((quizID) => {
+  //     return createNewQuestions()
+
+  //   })
+  //   .then(redirect)
   })
+
+
+
 
   router.post('/:id', (req, res) => {
 
