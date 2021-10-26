@@ -20,6 +20,7 @@ module.exports = (db) => {
     } else {
       templateVars['name'] = undefined;
     }
+
     const query = `
     SELECT attempts.score, quizzes.title, users.name FROM attempts
     JOIN quizzes on quizzes.id = attempts.user_id

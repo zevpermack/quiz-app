@@ -40,13 +40,14 @@ const quizRouters = (db) => {
   //
 
   router.get('/:id', (req, res) => {
-    const userId = req.session.user_id
+    const userId = req.session.user_id;
+    const quizId = req.params.id;
+    const templateVars = {};
     if(userId) {
-      return db.query("SELECT * FROM users WHERE id = $1", [userId])
+      db.query("SELECT * FROM users WHERE id = $1", [userId])
       .then((data) => {
         console.log('data rows: ', data.rows[0].name);
-        const templateVars = {name: data.rows[0].name};
-        res.render("take-quiz", templateVars);
+        templateVars.name = data.rows[0].name;
       })
       .catch((err) => {
         console.log(err.message);
@@ -54,6 +55,14 @@ const quizRouters = (db) => {
     } else {
       res.send("you must be logged in to create a page");
     }
+    getQuizById(db, quizId)
+    .then((quizQuestions) => {
+      console.log('this is templateVars: ', templateVars);
+      const questions = {question : quizQuestions}
+      questions.name = templateVars.name;
+      console.log('THIS IS QUESTIONS: ', questions);
+      res.render("take-quiz", questions);
+    })
   });
 
 
