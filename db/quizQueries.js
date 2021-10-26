@@ -3,7 +3,7 @@
 const getAllQuizzes = function(db){
 
   const queryParams =['public'];
-  const queryString = `SELECT quizzes.title,quizzes.date_created, users.name FROM quizzes
+  const queryString = `SELECT quizzes.id, quizzes.title,quizzes.date_created, users.name FROM quizzes
                         JOIN users ON users.id = user_id
                         WHERE visibility = $1`;
 
