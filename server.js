@@ -48,7 +48,7 @@ const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 const quizRoutes = require("./routes/quizRouters");
 const resultsRoutes = require("./routes/results");
-const quizRoutes = require("./routes/quizzes");
+//const quizRoutes = require("./routes/quizzes");
 
 const { DataRowMessage } = require("pg-protocol/dist/messages");
 // Mount all resource routes
