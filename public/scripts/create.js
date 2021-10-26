@@ -12,7 +12,7 @@ $(() => {
     let lastId = $(".quiz-questions").children().last().attr("id");
     const lastIdNum = parseInt(lastId);
     if(!allowedToCreate(lastIdNum)) {
-      alert("Please fill out the previous question");
+      alert("Please fill out all fields of the question");
       return;
     }
     let questionNumber = lastIdNum + 1;
@@ -51,7 +51,7 @@ $(() => {
   e.preventDefault();
 
   if(!allowedToCreate(getLastQuestionId())) {
-    alert("Please fill out the previous question");
+    alert("Please fill out all fields of the question");
     return;
   }
 

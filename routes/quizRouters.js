@@ -37,12 +37,25 @@ const quizRouters = (db) => {
     }
   })
 
+  //
+
   router.get('/:id', (req, res) => {
-    getQuizById(db, req.params.id)
-      .then((quiz) => {
-        return res.json(quiz)
+    const userId = req.session.user_id
+    if(userId) {
+      return db.query("SELECT * FROM users WHERE id = $1", [userId])
+      .then((data) => {
+        console.log('data rows: ', data.rows[0].name);
+        const templateVars = {name: data.rows[0].name};
+        res.render("take-quiz", templateVars);
       })
-  })
+      .catch((err) => {
+        console.log(err.message);
+      })
+    } else {
+      res.send("you must be logged in to create a page");
+    }
+  });
+
 
   router.post('/', (req, res) => {
     const { quizTitle, isPrivate, questions } = req.body;
@@ -63,13 +76,6 @@ const quizRouters = (db) => {
         return res.send({ true: true });
       }
 
-  //   createNewQuiz(db,)
-
-  //   .then((quizID) => {
-  //     return createNewQuestions()
-
-  //   })
-  //   .then(redirect)
   })
 
 
