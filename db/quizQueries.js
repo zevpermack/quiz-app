@@ -23,10 +23,11 @@ const getQuizById = function(db,id){
   const queryParams =[id];
   const queryString = `SELECT quizzes.title,question_content,choice1,choice2,choice3,choice4 FROM quizzes
                       JOIN questions ON quizzes.id = quiz_id  WHERE quizzes.id = $1 `;
-                      console.log(queryString)
+                      console.log('this is the query string:', queryString)
    return db.query(queryString,queryParams)
    .then((res) =>{
-        return res.rows[0];
+        console.log('this is res.rows[0]', res.rows[0]);
+        return res.rows;
    })
    .catch((err) =>{
      console.log(err.message);
