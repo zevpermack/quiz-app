@@ -73,7 +73,8 @@ const quizRouters = (db) => {
           });
         });
         // Return response to ajax with 201 statuscode;
-        return res.send({ true: true });
+       res.redirect("/");
+       // return res.send({ true: true });
       }
 
   })
