@@ -22,9 +22,10 @@
     <div class = "main-grid">
       <div class="list-group">
         <% data.forEach(function(quiz) { %>
+          <% const url = `/quizzes/${quiz.id}`  %>
           <a href="#" class="list-group-item list-group-item-action" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><%= quiz.title %></h5>
+              <a href = <%= url %>><h5 class="mb-1"><%= quiz.title %></h5></a>
               <small>Created at: <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(quiz.date_created) %></small>
             </div>
             <p class="mb-1">Created By: <%= quiz.name %> </p>
