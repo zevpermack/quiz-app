@@ -46,7 +46,8 @@ $(() => {
 
 // Submit questions
 
-$("form").on('submit', function (e) {
+//$("form").on('submit', function (e) {
+  $(document).on('submit','form', function (e) {
   e.preventDefault();
 
   if(!allowedToCreate(getLastQuestionId())) {
