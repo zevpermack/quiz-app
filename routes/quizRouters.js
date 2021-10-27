@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllQuizzes, getQuizById, createNewQuestions, createNewQuiz } = require('./../db/quizQueries.js');
+const { getAllQuizzes, getQuizById, createNewQuestions, createNewQuiz, getAnswerForQuestion } = require('./../db/quizQueries.js');
 
 const quizRouters = (db) => {
 
@@ -91,6 +91,13 @@ const quizRouters = (db) => {
 
 
   router.post('/:id', (req, res) => {
+    const { userAnswers, value } = req.body;
+    const quiz_id = req.params.id;
+    console.log("idddd",quiz_id)
+    getAnswerForQuestion(db, )
+    const userId = req.session.user_id;
+   return(res.render(`results/${userId}/most_recent`));
+
 
   })
 
