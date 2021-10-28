@@ -1,54 +1,62 @@
 $(() => {
-  // const title = 'Quiz Title';
-  // const questions = {
-  //   'What is 1+1' : ['0', '1', '2', '3',],
-  //   'What is 2+2' : ['0', '2', '5', '4',],
-  //   'What is 3+3' : ['5', '6', '7', '8',],
-  //   'What is 4+4' : ['8', '9', '10', '11',],
-  // }
-  // console.log('this is take-quiz.js');
-  // $('.main-grid').prepend(`
-  // <h1 id = "page-header">${title}</h1>
-  // `
-  // );
 
-  // let qCount = 1;
-  // for(question in questions) {
-  //   console.log(`run ${qCount}`);
-  //   $('#question-form').append(
-  //     `
-  //     <div id = q${qCount}>
-  //         <h2 class = "question-title" id = "q-title-${qCount}">${qCount}. ${question}</h2>
-  //         <div class="form-check">
-  //           <input class="form-check-input" type="radio" name="Radio${qCount}" id="answer${qCount}1" value="option1" checked>
-  //           <label class="form-check-label" for="Radio${qCount}">
-  //             ${questions[question][0]}
-  //           </label>
-  //         </div>
-  //         <div class="form-check">
-  //           <input class="form-check-input" type="radio" name="Radio${qCount}" id="exampleRadios${qCount}2" value="option2">
-  //           <label class="form-check-label" for="Radio${qCount}">
-  //           ${questions[question][1]}
-  //           </label>
-  //         </div>
-  //         <div class="form-check">
-  //           <input class="form-check-input" type="radio" name="Radio${qCount}" id="exampleRadios${qCount}3" value="option3">
-  //           <label class="form-check-label" for="Radio${qCount}">
-  //           ${questions[question][2]}
-  //           </label>
-  //         </div>
-  //         <div class="form-check">
-  //           <input class="form-check-input" type="radio" name="Radio${qCount}" id="exampleRadios${qCount}4" value="option4">
-  //           <label class="form-check-label" for="Radio${qCount}">
-  //           ${questions[question][3]}
-  //           </label>
-  //         </div>
-  //       </div>
-  //     `
-  //   );
-  //   qCount++;
-  // }
-  // $('#question-form').append(
-  // `<div id = "btn-container"><input class="btn mt-2" id = "submit-btn" type="submit" value="Submit"></input></div>`
-  // )
+  $(document).on('submit', 'form', function (e) {
+    e.preventDefault();
+
+    getUserAnswers();
+
+
+  })
+  let noOfQuestions;
+  let userAnswers = [];
+  const getUserAnswers = function () {
+    const elements = document.getElementsByClassName("quiz-questions");
+    console.log("elements", elements);
+    for (let index = 1; index <= elements.length; index++) {
+      const answerChoice = getRadioButtonValue(`Radio${index}`);
+      console.log("***", answerChoice)
+
+      const answer = document.getElementById(`questionChoice${answerChoice}-${index}`).innerText;
+      console.log("answer", answer)
+      userAnswers.push(answer);
+      noOfQuestions = index;
+    }
+    console.log("final answers", userAnswers);
+
+    let value = 100 / noOfQuestions;
+    //getting the id from the url so that we can pass it to the backend
+    const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    console.log("id***", id)
+    $.ajax({
+      type: "POST",
+      url: `/quizzes/${id}`,
+      data: { userAnswers, value, id },
+
+      success: (data) => {
+        console.log("userajax", data);
+        window.location.href = `/results/${data.userId}/most_recent`;
+      },
+      catch: (e) => {
+        alert(e);
+      }
+    });
+
+
+  }
+
+
+  function getRadioButtonValue(selector) {
+
+    const ele = document.getElementsByName(selector);
+    console.log("ele", ele)
+    for (i = 0; i < ele.length; i++) {
+      console.log("radio", ele[i])
+      if (ele[i].checked) {
+
+        return ele[i].value;
+      }
+    }
+  }
+
+
 })

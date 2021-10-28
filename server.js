@@ -93,7 +93,7 @@ app.get("/", (req, res) => {
        // const templateVars = {name: data.rows[0].name};
        // res.render("index", templateVars);
 
-        return db.query("SELECT quizzes.id, quizzes.title,quizzes.date_created,users.name FROM quizzes JOIN  users ON users.id = user_id LIMIT 3")
+        return db.query("SELECT quizzes.id, quizzes.title,quizzes.date_created,users.name FROM quizzes JOIN  users ON users.id = user_id ORDER BY date_created DESC LIMIT 3")
          .then((quizData) => {
            console.log(quizData.rows);
            res.render("index",{ data: quizData.rows, name: loginData.rows[0].name });
