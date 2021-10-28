@@ -5,7 +5,7 @@ const getAllQuizzes = function (db) {
   const queryParams = ['public'];
   const queryString = `SELECT quizzes.id, quizzes.title,quizzes.date_created, users.name FROM quizzes
                         JOIN users ON users.id = user_id
-                        WHERE visibility = $1`;
+                        WHERE visibility = $1 ORDER BY date_created DESC`;
 
   return db.query(queryString, queryParams)
     .then((res) => {
@@ -63,6 +63,7 @@ const createNewQuestions = function (db, question) {
       console.log(err.message);
     })
 }
+// Function to get answers for a question in a quiz
 const getAnswerForQuestion = function (db, quiz_id) {
   const queryParams = [quiz_id];
 
@@ -76,7 +77,7 @@ const getAnswerForQuestion = function (db, quiz_id) {
     })
 }
 
-
+//function to create attempts of a user on a quiz
 const CreateAttempts = function (db, quiz_id, user_id, score) {
 
   const queryParams = [user_id, quiz_id, score];

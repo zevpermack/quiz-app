@@ -15,7 +15,7 @@ $(() => {
       alert("Please fill out all fields of the question");
       return;
     }
-    let questionNumber = lastIdNum + 1;
+    // let questionNumber = lastIdNum + 1;
    // $(".quiz-questions").append(
      $(".quiz-questions-container").append(
       `<div class = "quiz-questions">
@@ -42,6 +42,7 @@ $(() => {
       </div>
       `
     )
+    questionNumber++;
   });
 
 // Submit questions
