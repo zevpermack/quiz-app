@@ -3,30 +3,46 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  router.get('/:user_id/most_recent', (req, res) => {
-    const userId = req.params.user_id;
-    const query = `
-    SELECT attempts.score, quizzes.title FROM attempts
-    JOIN quizzes on quizzes.id = attempts.user_id
-    WHERE attempts.user_id = $1 ORDER BY date_attempted DESC;`
+  router.get('/:id/most_recent', (req, res) => {
 
-    console.log('results route entered');
-    console.log(`user_id present ${userId}`);
-    return db.query(query, [userId])
-    .then((data) => {
-      console.log('all data rows: ', data.rows);
-      const quizInfo = data.rows[0];
-      return res.send(`
-      User Score: ${quizInfo.score}
-      Test Title: ${quizInfo.title}`
-      );
-    })
-    .catch((err) => {
-      res.send(`catch block entered ${err.message}`);
+    // The userId is used for the navbar login name
+    const userId = req.session.user_id;
+    console.log("userrrrr", userId)
+    // The tesTakerId is taken from the req params and then queried in the database
+    // This way any user can see the most recent score from any other user
+    const testTakerId = req.params.id;
+
+    const templateVars = {};
+    if (userId) {
+      db.query("SELECT * FROM users WHERE id = $1", [userId])
+        .then((usersName) => {
+          templateVars['name'] = usersName.rows[0].name;
+        })
+    } else {
+      templateVars['name'] = undefined;
     }
-    )
+
+    const query = `
+    SELECT attempts.score, quizzes.title, users.name, attempts.date_attempted FROM attempts
+    JOIN quizzes on quizzes.id = attempts.quiz_id
+    JOIN users on users.id = attempts.user_id
+    WHERE attempts.user_id = $1 ORDER BY date_attempted DESC LIMIT 1 ;`
+
+    return db.query(query, [testTakerId])
+      .then((data) => {
+        const quizInfo = data.rows[0];
+        templateVars.score = quizInfo.score;
+        templateVars.title = quizInfo.title;
+        templateVars.quizTakerName = quizInfo.name;
+        return res.render("recent-result", templateVars);
+
+      })
+      .catch((err) => {
+        res.send(`catch block entered ${err.message}`);
+      })
 
   });
+
 
   return router;
 };

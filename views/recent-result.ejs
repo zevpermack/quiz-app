@@ -6,35 +6,28 @@
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/quizzes.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/recent-result.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/recent-result.js"></script>
 </head>
 
 <body>
   <%- include('partials/_header') %>
   <main>
     <div class = "main-grid">
-      <div class="list-group">
-        <% data.forEach(function(quiz) { %>
-          <% const url = `/quizzes/${quiz.id}`  %>
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class="d-flex w-100 justify-content-between">
-              <a href = <%= url %>><h5 class="mb-1"><%= quiz.title %></h5></a>
-              <small>Created at: <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(quiz.date_created) %></small>
-            </div>
-            <p class="mb-1">Created By: <%= quiz.name %> </p>
-            <% }); %>
-          </a>
+      <h1>Quiz Complete</h1>
+      <h2>Quiz Title: <%= title %> </h2>
+      <h3>Completed By: <%= quizTakerName %></h3>
+      <p>Score: <%= score %></p>
+      <button class="btn mt-2" id = "share-btn" type="submit" value="Submit"> Share </button>
+      <p>Click share to copy this URL to your clipboard!</p>
 
-      </div>
     </div>
-
-  </div>
 
   </main>
 
