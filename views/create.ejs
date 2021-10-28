@@ -13,7 +13,6 @@
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/create.js"></script>
 </head>
 
@@ -22,10 +21,10 @@
   <main>
     <div class = "main-grid">
       <h1 id = "page-header">Create a quiz</h1>
-      <form class="form" action="/urls" method="POST">
+      <form class="form" >
         <div class="form-group mb-2 create-title">
           <label for="quizTitle">Quiz Title:</label>
-          <input class="" type="text" name="quizTitle" placeholder="eg. Capital Cities" style= "width: 300px;">
+          <input id="quizTitle" type="text" name="quizTitle" placeholder="eg. Capital Cities" style= "width: 300px;" id="quizTitle">
         </div>
       <div class="form-group mb-2 private-option">
         <label class="form-check-label" for="private-check">
@@ -33,46 +32,46 @@
         </label>
         <input class="form-check-input ml-2" type="checkbox" value="" id="private-check">
       </div>
+      <div class ="quiz-questions-container">
       <div class = "quiz-questions">
-        <div class="form-group mb-2" id = "1-question-group">
-          <label for="question1">Question 1:</label>
-          <input class="form-control mb-2" type="text" name="question1" placeholder="eg. What is the capital of?" style= "width: 1000px;">
+        <div class="form-group mb-2" id = "0-question-group">
+          <label for="question0">Question 0:</label>
+          <input id="questionTitle-0" class="form-control mb-2" type="text" name="question1" placeholder="eg. What is the capital of?" style= "width: 1000px;">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="radio1" id="flexRadio11">
-            <input class="form-control" for="flexRadio11" type="text" name="question1" placeholder="Choice 1" style= "width: 500px;">
+            <input class="form-check-input" type="radio" name="radio0" id="flexRadio11" value="1">
+            <input id="questionChoice1-0" class="form-control" for="flexRadio11" type="text" name="question1" placeholder="Choice 1" style= "width: 500px;">
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="radio1" id="flexRadio12">
-            <input class="form-control" for="flexRadio12" type="text" name="question1" placeholder="Choice 2" style= "width: 500px;">
+            <input class="form-check-input" type="radio" name="radio0" id="flexRadio12" value="2">
+            <input id="questionChoice2-0" class="form-control" for="flexRadio12" type="text" name="question1" placeholder="Choice 2" style= "width: 500px;">
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="radio1" id="flexRadio13">
-            <input class="form-control" for="flexRadio13" type="text" name="question1" placeholder="Choice 3" style= "width: 500px;">
+            <input class="form-check-input" type="radio" name="radio0" id="flexRadio13" value="3">
+            <input id="questionChoice3-0" class="form-control" for="flexRadio13" type="text" name="question1" placeholder="Choice 3" style= "width: 500px;">
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="radio1" id="flexRadio14">
-            <input class="form-control" for="flexRadio14" type="text" name="question1" placeholder="Choice 4" style= "width: 500px;">
+            <input class="form-check-input" type="radio" name="radio0" id="flexRadio14" value="4">
+            <input id="questionChoice4-0" class="form-control" for="flexRadio14" type="text" name="question1" placeholder="Choice 4" style= "width: 500px;">
           </div>
+        </div>
         </div>
       </div>
       <div class = "btn" id = "add-question-btn" >
-        <span class = "mr-2">➕</span>
+        <span class = "mr-2"></span>
         <span>add question</span>
       </div>
       <br>
       <input class="btn mt-2" id = "submit-btn" type="submit" value="Submit">
-
-
-
       </form>
     </div>
 
   </main>
 
   <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
