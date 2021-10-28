@@ -21,7 +21,7 @@ const getAllQuizzes = function (db) {
 const getQuizById = function (db, id) {
 
   const queryParams = [id];
-  const queryString = `SELECT quizzes.title,question_content,choice1,choice2,choice3,choice4 FROM quizzes
+  const queryString = `SELECT title, question_content,choice1,choice2,choice3,choice4 FROM quizzes
                       JOIN questions ON quizzes.id = quiz_id  WHERE quizzes.id = $1 `;
   console.log('this is the query string:', queryString)
   return db.query(queryString, queryParams)
@@ -77,7 +77,7 @@ const getAnswerForQuestion = function (db, quiz_id) {
 }
 
 
-const CreateAttempts = function (db, user_id, quiz_id, score) {
+const CreateAttempts = function (db, quiz_id, user_id, score) {
 
   const queryParams = [user_id, quiz_id, score];
   const queryString = `INSERT INTO attempts (user_id,quiz_id,score) VALUES ($1,$2,$3) returning *`;

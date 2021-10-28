@@ -57,10 +57,9 @@ const quizRouters = (db) => {
     }
     getQuizById(db, quizId)
     .then((quizQuestions) => {
-      console.log('this is templateVars: ', templateVars);
+      console.log("Quiz Questions", quizQuestions);
       const questions = {question : quizQuestions}
       questions.name = templateVars.name;
-      console.log('THIS IS QUESTIONS: ', questions);
       res.render("take-quiz", questions);
     })
   });
@@ -97,11 +96,11 @@ const quizRouters = (db) => {
     console.log("idddd",quiz_id)
     let score = 0;
     getAnswerForQuestion(db,quiz_id)
-    .then((quizQuestions) =>{
-      console.log("quize questions",quizQuestions)
-      for(let i = 0; i < quizQuestions.length;i++){
-       console.log("+++++++",quizQuestions[i],userAnswers[i])
-       if(quizQuestions[i].answer === userAnswers[i]){
+    .then((quizAnswers) =>{
+      console.log("quize questions",quizAnswers)
+      for(let i = 0; i < quizAnswers.length;i++){
+       console.log("+++++++",quizAnswers[i],userAnswers[i])
+       if(quizAnswers[i].answer === userAnswers[i]){
          score +=parseInt(value);
        }
       }
@@ -109,9 +108,9 @@ const quizRouters = (db) => {
     })
 
     .then(()=>{
-      CreateAttempts(db,quiz_id,userId,score)
+      CreateAttempts(db,quiz_id, userId,score)
       .then((attempts)=> {
-      //get the useid and return it back to the frontend for ajax to load the post pagec
+      //get the userid and return it back to the frontend for ajax to load the post page(results)
       res.send({userId: attempts.user_id})
       })
     })
