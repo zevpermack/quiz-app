@@ -18,9 +18,6 @@ $(() => {
 
       const answer = document.getElementById(`questionChoice${answerChoice}-${index}`).innerText;
       console.log("answer", answer)
-
-
-
       userAnswers.push(answer);
       noOfQuestions = index;
     }
@@ -29,14 +26,14 @@ $(() => {
     let value = 100 / noOfQuestions;
     //getting the id from the url so that we can pass it to the backend
     const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-    console.log("id***",id)
+    console.log("id***", id)
     $.ajax({
       type: "POST",
       url: `/quizzes/${id}`,
-      data: { userAnswers, value,id },
+      data: { userAnswers, value, id },
 
       success: (data) => {
-      console.log("userajax",data);
+        console.log("userajax", data);
         window.location.href = `/results/${data.userId}/most_recent`;
       },
       catch: (e) => {
