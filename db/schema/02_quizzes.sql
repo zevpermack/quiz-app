@@ -7,5 +7,5 @@ CREATE TABLE quizzes (
   user_id INTEGER REFERENCES users(id),
   title VARCHAR(255) NOT NULL,
   visibility VARCHAR(255) DEFAULT 'public',
-  date_created DATE DEFAULT CURRENT_DATE
+  date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
-const { getAllQuizzes, getQuizById, createNewQuestions, createNewQuiz } = require('./../db/quizQueries.js');
-
+const { getAllQuizzes, getQuizById, createNewQuestions, createNewQuiz, getAnswerForQuestion, CreateAttempts } = require('./../db/quizQueries.js');
 const quizRouters = (db) => {
-
-
   router.get('/', (req, res) => {
     const userId = req.session.user_id;
-
     if (userId) {
       return db.query("SELECT * FROM users  WHERE users.id = $1 ", [userId])
         .then((loginData) => {
@@ -37,23 +32,31 @@ const quizRouters = (db) => {
     }
   })
 
-  //
+
 
   router.get('/:id', (req, res) => {
-    const userId = req.session.user_id
-    if(userId) {
-      return db.query("SELECT * FROM users WHERE id = $1", [userId])
-      .then((data) => {
-        console.log('data rows: ', data.rows[0].name);
-        const templateVars = {name: data.rows[0].name};
-        res.render("take-quiz", templateVars);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+    const userId = req.session.user_id;
+    const quizId = req.params.id;
+    const templateVars = {};
+    if (userId) {
+      db.query("SELECT * FROM users WHERE id = $1", [userId])
+        .then((data) => {
+          console.log('data rows: ', data.rows[0].name);
+          templateVars.name = data.rows[0].name;
+        })
+        .catch((err) => {
+          console.log(err.message);
+        })
     } else {
       res.send("you must be logged in to create a page");
     }
+    getQuizById(db, quizId)
+      .then((quizQuestions) => {
+        console.log("Quiz Questions", quizQuestions);
+        const questions = { question: quizQuestions }
+        questions.name = templateVars.name;
+        res.render("take-quiz", questions);
+      })
   });
 
 
@@ -63,7 +66,6 @@ const quizRouters = (db) => {
     if (userId) {
       db.query("SELECT * FROM users WHERE users.id = $1 ", [userId])
         .then(async (loginData) => {
-          //res.render("create", { name: loginData.rows[0].name });
           createNewQuiz(db, userId, quizTitle, isPrivate).then((quiz) => {
             const { id } = quiz;
 
@@ -72,17 +74,44 @@ const quizRouters = (db) => {
             });
           });
         });
-        // Return response to ajax with 201 statuscode;
-       res.redirect("/");
-       // return res.send({ true: true });
-      }
+
+      // Return response to ajax with 201 statuscode;
+      return res.send({ true: true });
+    }
 
   })
 
 
-
-
   router.post('/:id', (req, res) => {
+    const userId = req.session.user_id;
+    const { userAnswers, value } = req.body;
+    const quiz_id = req.params.id;
+    console.log("idddd", quiz_id)
+    let score = 0;
+    getAnswerForQuestion(db, quiz_id)
+      .then((quizAnswers) => {
+        console.log("quize questions", quizAnswers)
+        for (let i = 0; i < quizAnswers.length; i++) {
+          console.log("+++++++", quizAnswers[i], userAnswers[i])
+          if (quizAnswers[i].answer === userAnswers[i]) {
+            score += parseInt(value);
+            if (score === 99) {
+              score = 100;
+            }
+          }
+        }
+        console.log("score", score);
+      })
+
+      .then(() => {
+        CreateAttempts(db, quiz_id, userId, score)
+          .then((attempts) => {
+            //get the userid and return it back to the frontend for ajax to load the post page(results)
+            res.send({ userId: attempts.user_id })
+
+          })
+      })
+
 
   })
 
