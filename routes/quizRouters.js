@@ -95,6 +95,9 @@ const quizRouters = (db) => {
           console.log("+++++++", quizAnswers[i], userAnswers[i])
           if (quizAnswers[i].answer === userAnswers[i]) {
             score += parseInt(value);
+            if (score === 99) {
+              score = 100;
+            }
           }
         }
         console.log("score", score);
@@ -105,6 +108,7 @@ const quizRouters = (db) => {
           .then((attempts) => {
             //get the userid and return it back to the frontend for ajax to load the post page(results)
             res.send({ userId: attempts.user_id })
+
           })
       })
 
