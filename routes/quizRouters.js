@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllQuizzes, getQuizById, createNewQuestions, createNewQuiz, getAnswerForQuestion } = require('./../db/quizQueries.js');
+const { getAllQuizzes, getQuizById, createNewQuestions, createNewQuiz, getAnswerForQuestion,CreateAttempts } = require('./../db/quizQueries.js');
 
 const quizRouters = (db) => {
 
@@ -91,12 +91,32 @@ const quizRouters = (db) => {
 
 
   router.post('/:id', (req, res) => {
+    const userId = req.session.user_id;
     const { userAnswers, value } = req.body;
     const quiz_id = req.params.id;
     console.log("idddd",quiz_id)
-    getAnswerForQuestion(db, )
-    const userId = req.session.user_id;
-   return(res.render(`results/${userId}/most_recent`));
+    let score = 0;
+    getAnswerForQuestion(db,quiz_id)
+    .then((quizQuestions) =>{
+      console.log("quize questions",quizQuestions)
+      for(let i = 0; i < quizQuestions.length;i++){
+       console.log("+++++++",quizQuestions[i],userAnswers[i])
+       if(quizQuestions[i].answer === userAnswers[i]){
+         score +=parseInt(value);
+       }
+      }
+      console.log("score",score);
+    })
+
+    .then(()=>{
+      CreateAttempts(db,quiz_id,userId,score)
+      .then((attempts)=> {
+      //get the useid and return it back to the frontend for ajax to load the post pagec
+      res.send({userId: attempts.user_id})
+      })
+    })
+
+
 
 
   })

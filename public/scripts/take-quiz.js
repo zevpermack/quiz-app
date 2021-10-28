@@ -27,15 +27,17 @@ $(() => {
     console.log("final answers", userAnswers);
 
     let value = 100 / noOfQuestions;
-
+    //getting the id from the url so that we can pass it to the backend
+    const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    console.log("id***",id)
     $.ajax({
       type: "POST",
-      url: "/quizzes/:id",
-      data: { userAnswers, value },
+      url: `/quizzes/${id}`,
+      data: { userAnswers, value,id },
 
-      success: () => {
-
-        window.location.href = "/quizzes";
+      success: (data) => {
+      console.log("userajax",data);
+        window.location.href = `/results/${data.userId}/most_recent`;
       },
       catch: (e) => {
         alert(e);

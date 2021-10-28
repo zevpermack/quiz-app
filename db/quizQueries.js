@@ -66,7 +66,7 @@ const createNewQuestions = function (db, question) {
 const getAnswerForQuestion = function (db, quiz_id) {
   const queryParams = [quiz_id];
 
-  const queryString = `SELECT answer FROM questions JOIN quizzes ON quizzes.id = quiz_id  WHERE quizzes.id = $1,`;
+  const queryString = `SELECT answer FROM questions  WHERE quiz_id = $1`;
   return db.query(queryString, queryParams)
     .then((res) => {
       return res.rows;
@@ -77,11 +77,23 @@ const getAnswerForQuestion = function (db, quiz_id) {
 }
 
 
+const CreateAttempts = function (db, user_id, quiz_id, score) {
+
+  const queryParams = [user_id, quiz_id, score];
+  const queryString = `INSERT INTO attempts (user_id,quiz_id,score) VALUES ($1,$2,$3) returning *`;
+  return db.query(queryString, queryParams)
+    .then((res) => {
+      return res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+
+}
 
 
 
 
 
 
-
-module.exports = { getAllQuizzes, getQuizById, createNewQuiz, createNewQuestions, getAnswerForQuestion };
+module.exports = { getAllQuizzes, getQuizById, createNewQuiz, createNewQuestions, getAnswerForQuestion, CreateAttempts };
