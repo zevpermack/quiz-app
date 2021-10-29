@@ -10,13 +10,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  hr {
-    border: 35px;
-    display:block;
-    width: 35%;
-    background-color: black;
-    height: 1px;
-  }
+}
+
+hr {
+  border: 35px;
+  display:block;
+  width: 35%;
+  background-color: black;
+  height: 1px;
+  width: 20%;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75));
 }
 
 #recent-cards {
@@ -35,9 +40,9 @@
   text-align: center;
 }
 
-.home-quiz-title {
-  font-size: 35px;
+.home-quiz-title, .home-quiz-title:hover {
+  text-decoration: none;
   color: #f4a261;
+  font-size: 30px;
 }
-
 
