@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/quizzes.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <!-- Google Font API -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -22,19 +26,19 @@
       <div class="list-group">
         <% data.forEach(function(quiz) { %>
           <% const url = `/quizzes/${quiz.id}`  %>
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class="d-flex w-100 justify-content-between">
-              <a href = <%= url %>><h5 class="mb-1"><%= quiz.title %></h5></a>
-              <small>Created at: <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(quiz.date_created) %></small>
+          <!-- Start New Code -->
+            <div  class="list-group-item" aria-current="true">
+              <div class="d-flex w-100 justify-content-between">
+                <a class = quiz-title href=<%= url %>><%= quiz.title %></a>
+                <p>Created on: <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(quiz.date_created) %></p>
+              </div>
+              <p class="mb-1 created-by">Created By: <%= quiz.name %></p>
             </div>
-            <p class="mb-1">Created By: <%= quiz.name %> </p>
-            <% }); %>
-          </a>
+
+        <% }); %>
 
       </div>
     </div>
-
-  </div>
 
   </main>
 
